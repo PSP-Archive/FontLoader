@@ -1,0 +1,85 @@
+#ifndef __FONTLOADER__
+#define __FONTLOADER__
+
+// SDK includes
+#include <psptypes.h>
+
+// Freetype includes
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
+// 3rd Party includes
+#include "graphics.h"
+
+//Freetype Library Instance
+FT_Library  ft_library;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Font Struct
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+typedef struct {
+	char* name;
+	FT_Face face;
+	u8* data;
+} Font;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Font_Load
+//
+// Usage: Font* myFont = Font_Load("theFont.ttf");
+// Returns 0 on error
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Font* Font_Load(const char* filename);
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Font_Unload
+//
+// Usage: Font_Unload(myFont);
+// 'myFont' is a pointer to an open font file
+// Free memory when a font is no longer required
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+int Font_Unload(Font* font);
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Font_SetSize
+//
+// Usage: Font_SetSize(myFont, 60);
+// 'myFont' is a pointer to an open font file
+// '60' is the size (in pixels)
+// Set the size of the font (in pixels)
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+int Font_SetSize(Font* font, int height);
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Font_Print_Screen
+//
+// Usage: Font_Print_Screen(othFont, 100, 100, "2nd Font", GU_RGBA(255, 255, 255, 255));
+// 'othFont' is a pointer to an open font file
+// '100' is the x position on the screen
+// '100' is the y position on the screen
+// "2nd Font" is the text to print
+// GU_RGBA(255, 255, 255, 255) is the color of the text
+// Note: You can use any valid u32 color format
+// Such as 0xFFFFFFFF, GU_RGBA(255, 255, 255, 255) or a 'Color' variable (from the graphics lib)
+// !!! THIS FUNCTION WILL LIKELY CHANGE IT LATER REVISIONS TO ALLOW FOR NON-USAGE OF THE GRAPHICS LIB !!!
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+int Font_Print_Screen(Font* font, int x, int y, const char* text, u32 color);
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Font_Print_Image
+//
+// Usage: Font_Print_Image(myFont, 0, 50, "1st Font", GU_RGBA(255, 255, 255, 255), myImage);
+// 'myFont' is a pointer to an open font file
+// '0' is the x position on the image
+// '100' is the y position on the image
+// "1st Font" is the text to print to the image
+// GU_RGBA(255, 255, 255, 255) is the color of the text
+// Note: You can use any valid u32 color format
+// Such as 0xFFFFFFFF, GU_RGBA(255, 255, 255, 255) or a 'Color' variable (from the graphics lib)
+// 'myImage' is a pointer to a graphics lib 'Image*'
+// !!! THIS FUNCTION WILL LIKELY CHANGE IT LATER REVISIONS TO ALLOW FOR NON-USAGE OF THE GRAPHICS LIB !!!
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+int Font_Print_Image(Font* font, int x, int y, const char* text, u32 color, Image* image);
+
+#endif
